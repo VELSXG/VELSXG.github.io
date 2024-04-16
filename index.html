@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SST DATABASE X G 2024-2025</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>SST DATABASE X G 2024-2025</h1>
+    <div id="checklist"></div>
+    <button onclick="saveData()">Save</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checklist = document.getElementById('checklist');
+            const students = [
+                "AADARSH KUMAR SAHU",
+                "AKASH. K",
+                "AKSHITA SREE M",
+                "ARUSH .S",
+                "DHEERAJ KUMAR .K",
+                "HARSHIKA SRINIVASAN",
+                "JAISAI RAAGAV. J",
+                "KUMARAVEL .S",
+                "NAVEEN .P",
+                "Nishant.P.H",
+                "PREETHI.S",
+                "Sai Harish",
+                "SATHYA .S",
+                "SREELEKHA V",
+                "THARUN.R",
+                "THEJESHWARAN .S",
+                "VIDHU .R"
+            ];
+
+            const currentDate = new Date().toLocaleDateString();
+
+            students.forEach(name => {
+                const studentDiv = document.createElement('div');
+                studentDiv.classList.add('student');
+
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = name;
+
+                const cwCheckbox = createCheckbox('CW', false);
+                const hwCheckbox = createCheckbox('HW', false);
+                const assignmentInput = createInput('Assignment', '');
+                const testInput = createInput('Test', '');
+
+                studentDiv.appendChild(nameSpan);
+                studentDiv.appendChild(cwCheckbox);
+                studentDiv.appendChild(hwCheckbox);
+                studentDiv.appendChild(assignmentInput);
+                studentDiv.appendChild(testInput);
+
+                checklist.appendChild(studentDiv);
+            });
+
+            // Display current date
+            const dateParagraph = document.createElement('p');
+            dateParagraph.textContent = `Last Updated: ${currentDate}`;
+            document.body.appendChild(dateParagraph);
+        });
+
+        function createCheckbox(labelText, isChecked) {
+            const label = document.createElement('label');
+            label.textContent = labelText;
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = isChecked;
+            label.appendChild(checkbox);
+            return label;
+        }
+
+        function createInput(labelText, value) {
+            const label = document.createElement('label');
+            label.textContent = labelText;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = value;
+            label.appendChild(input);
+            return label;
+        }
+
+        function saveData() {
+            const students = document.querySelectorAll('.student');
+            let data = '';
+
+            students.forEach(student => {
+                const name = student.querySelector('span').textContent;
+                const cw = student.querySelector('input[type="checkbox"][value="CW"]').checked;
+                const hw = student.querySelector('input[type="checkbox"][value="HW"]').checked;
+                const assignment = student.querySelector('input[type="text"][value="Assignment"]').value;
+                const test = student.querySelector('input[type="text"][value="Test"]').value;
+
+                data += `${name},${cw},${hw},${assignment},${test}\n`;
+            });
+
+            const currentDate = new Date().toLocaleDateString().replaceAll('/', '-');
+            const fileName = `data_${currentDate}.txt`;
+
+            // Here you can save 'data' to a text file with the fileName
+            console.log(`Saving data to file: ${fileName}`);
+            console.log(data); // Just printing data to console for demonstration
+        }
+    </script>
+</body>
+</html>
